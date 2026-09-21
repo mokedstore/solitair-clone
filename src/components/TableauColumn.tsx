@@ -11,6 +11,7 @@ interface TableauColumnProps {
   selectedCardIndex: number | null;
   hintedCardIndex: number | null;
   twistEngine: TwistEngine;
+  deckTheme?: string;
   onCardClick: (columnIndex: number, cardIndex: number) => void;
   onDragStart: (columnIndex: number, cardIndex: number, e: React.PointerEvent) => void;
   onColumnClick: (columnIndex: number) => void;
@@ -23,6 +24,7 @@ export const TableauColumn: React.FC<TableauColumnProps> = ({
   selectedCardIndex,
   hintedCardIndex,
   twistEngine,
+  deckTheme,
   onCardClick,
   onDragStart,
   onColumnClick,
@@ -33,9 +35,19 @@ export const TableauColumn: React.FC<TableauColumnProps> = ({
     let currentY = 0;
 
     const totalCards = cards.length;
-    // Dynamic compression if column is very deep
-    const downSpacing = totalCards > 16 ? 8 : 12;
-    const upSpacing = totalCards > 16 ? 18 : totalCards > 12 ? 22 : 26;
+    const isMobile = typeof window !== 'undefined' && window.innerWidth <= 480;
+    const isTablet = typeof window !== 'undefined' && window.innerWidth <= 768;
+
+    // Dynamic compression if column is deep or on mobile
+    const downSpacing = isMobile
+      ? (totalCards > 14 ? 6 : 8)
+      : (totalCards > 16 ? 8 : 12);
+
+    const upSpacing = isMobile
+      ? (totalCards > 14 ? 14 : totalCards > 10 ? 16 : 18)
+      : isTablet
+      ? (totalCards > 14 ? 15 : totalCards > 10 ? 18 : 22)
+      : (totalCards > 16 ? 18 : totalCards > 12 ? 22 : 26);
 
     for (let i = 0; i < totalCards; i++) {
       result.push(currentY);
@@ -74,6 +86,7 @@ export const TableauColumn: React.FC<TableauColumnProps> = ({
             isSelected={isSelected}
             isHinted={isHinted}
             isSpectralRevealed={isSpectralRevealed}
+            deckTheme={deckTheme}
             onClick={(e) => {
               e.stopPropagation();
               onCardClick(columnIndex, idx);

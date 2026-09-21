@@ -29,6 +29,7 @@ import { DailyChallengeModal } from './components/Modals/DailyChallengeModal';
 import { StatisticsModal } from './components/Modals/StatisticsModal';
 import { SettingsModal } from './components/Modals/SettingsModal';
 import { TwistsModal } from './components/Modals/TwistsModal';
+import { TitleScreen } from './components/TitleScreen';
 
 const DEFAULT_SETTINGS: GameSettings = {
   language: typeof navigator !== 'undefined' && navigator.language.startsWith('he') ? 'he' : 'en',
@@ -36,8 +37,11 @@ const DEFAULT_SETTINGS: GameSettings = {
   relaxedDealing: false,
   soundEnabled: true,
   soundVolume: 0.6,
+  musicEnabled: true,
+  musicVolume: 0.35,
   autoMoveOnComplete: true,
   twistsEnabled: false,
+  deckTheme: 'classic',
 };
 
 const DEFAULT_STATS: GameStats = {
@@ -89,7 +93,8 @@ export const App: React.FC = () => {
   const [activeHint, setActiveHint] = useState<HintMove | null>(null);
   const [hintTimeout, setHintTimeout] = useState<number | null>(null);
 
-  // Modals
+  // Modals & Screens
+  const [showTitleScreen, setShowTitleScreen] = useState(true);
   const [isDailyModalOpen, setIsDailyModalOpen] = useState(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -116,10 +121,30 @@ export const App: React.FC = () => {
     localStorage.setItem('ssp_settings', JSON.stringify(settings));
     sound.setMuted(!settings.soundEnabled);
     sound.setVolume(settings.soundVolume);
+    sound.setMusicMuted(!settings.musicEnabled);
+    sound.setMusicVolume(settings.musicVolume);
     twistEngineRef.current.setEnabled(settings.twistsEnabled);
     document.documentElement.dir = settings.language === 'he' ? 'rtl' : 'ltr';
     document.documentElement.lang = settings.language;
   }, [settings]);
+
+  // Start background music smoothly on first user interaction (click or touch)
+  useEffect(() => {
+    const startMusicOnGesture = () => {
+      if (settings.musicEnabled) {
+        sound.startMusic();
+      }
+      window.removeEventListener('click', startMusicOnGesture);
+      window.removeEventListener('touchstart', startMusicOnGesture);
+    };
+
+    window.addEventListener('click', startMusicOnGesture, { once: true });
+    window.addEventListener('touchstart', startMusicOnGesture, { once: true });
+    return () => {
+      window.removeEventListener('click', startMusicOnGesture);
+      window.removeEventListener('touchstart', startMusicOnGesture);
+    };
+  }, [settings.musicEnabled]);
 
   // Sync stats changes
   useEffect(() => {
@@ -576,8 +601,21 @@ export const App: React.FC = () => {
     }));
   }, []);
 
+  const handleToggleMusic = useCallback(() => {
+    setSettings(prev => {
+      const next = !prev.musicEnabled;
+      if (next) sound.startMusic();
+      else sound.stopMusic();
+      return { ...prev, musicEnabled: next };
+    });
+  }, []);
+
   return (
-    <div className="game-viewport" dir={settings.language === 'he' ? 'rtl' : 'ltr'}>
+    <div
+      className="game-viewport"
+      data-theme={settings.deckTheme || 'classic'}
+      dir={settings.language === 'he' ? 'rtl' : 'ltr'}
+    >
       {/* Top Header Bar */}
       <HeaderBar
         score={score}
@@ -587,6 +625,7 @@ export const App: React.FC = () => {
         canUndo={historyManagerRef.current.canUndo()}
         canRedo={historyManagerRef.current.canRedo()}
         isMuted={!settings.soundEnabled}
+        isMusicMuted={!settings.musicEnabled}
         twistsEnabled={settings.twistsEnabled}
         currentLanguage={settings.language}
         t={t}
@@ -595,11 +634,13 @@ export const App: React.FC = () => {
         onHint={handleHint}
         onNewGame={() => startNewGame()}
         onToggleMute={() => setSettings(s => ({ ...s, soundEnabled: !s.soundEnabled }))}
+        onToggleMusic={handleToggleMusic}
         onToggleLanguage={handleToggleLanguage}
         onOpenDaily={() => setIsDailyModalOpen(true)}
         onOpenStats={() => setIsStatsModalOpen(true)}
         onOpenSettings={() => setIsSettingsModalOpen(true)}
         onToggleTwists={() => setIsTwistsModalOpen(true)}
+        onOpenTitleScreen={() => setShowTitleScreen(true)}
       />
 
       {/* Shelf for Completed Foundations & Stock Pile */}
@@ -610,6 +651,7 @@ export const App: React.FC = () => {
         canDealStock={stock.length > 0}
         emptyColumnCount={emptyColumnCount}
         relaxedDealing={settings.relaxedDealing}
+        deckTheme={settings.deckTheme || 'classic'}
         t={t}
       />
 
@@ -629,6 +671,7 @@ export const App: React.FC = () => {
             selectedCardIndex={selectedLocation?.col === colIdx ? selectedLocation.cardIdx : null}
             hintedCardIndex={activeHint?.fromColumn === colIdx ? activeHint.cardIndex : null}
             twistEngine={twistEngineRef.current}
+            deckTheme={settings.deckTheme || 'classic'}
             onCardClick={handleCardClick}
             onDragStart={handleDragStart}
             onColumnClick={handleEmptyColumnClick}
@@ -653,6 +696,7 @@ export const App: React.FC = () => {
               card={card}
               topOffset={i * 24}
               isDragging={true}
+              deckTheme={settings.deckTheme || 'classic'}
             />
           ))}
         </div>
@@ -734,6 +778,33 @@ export const App: React.FC = () => {
           }
         }}
       />
+
+      {/* Cinematic Title & Splash Screen */}
+      {showTitleScreen && (
+        <TitleScreen
+          suitMode={settings.suitMode}
+          language={settings.language}
+          soundEnabled={settings.soundEnabled}
+          musicEnabled={settings.musicEnabled}
+          deckTheme={settings.deckTheme || 'classic'}
+          t={t}
+          onStartGame={(mode) => {
+            if (mode !== settings.suitMode) {
+              setSettings(prev => ({ ...prev, suitMode: mode }));
+              startNewGame(generateRandomSeed(mode), mode);
+            }
+            setShowTitleScreen(false);
+          }}
+          onOpenDaily={() => {
+            setShowTitleScreen(false);
+            setIsDailyModalOpen(true);
+          }}
+          onToggleLanguage={handleToggleLanguage}
+          onToggleSound={() => setSettings(s => ({ ...s, soundEnabled: !s.soundEnabled }))}
+          onToggleMusic={handleToggleMusic}
+          onSelectDeckTheme={(theme) => setSettings(s => ({ ...s, deckTheme: theme }))}
+        />
+      )}
     </div>
   );
 };

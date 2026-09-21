@@ -19,6 +19,9 @@ export interface Translations {
   settings: string;
   mute: string;
   unmute: string;
+  musicMute: string;
+  musicUnmute: string;
+  musicVolume: string;
 
   // Shelf & Stock
   cardsRemaining: string;
@@ -80,6 +83,17 @@ export interface Translations {
   loadButton: string;
   done: string;
 
+  // Deck Selection
+  deckThemeLabel: string;
+  selectDeck: string;
+  deckClassic: string;
+  deckClassicDesc: string;
+  deckCelestial: string;
+  deckCelestialDesc: string;
+  deckUpcoming: string;
+  deckUpcomingDesc: string;
+  comingSoon: string;
+
   // Twists Modal
   twistsModalTitle: string;
   twistsModalDesc: string;
@@ -108,6 +122,13 @@ export interface Translations {
   // Hints
   noStrategicMoves: string;
   gameBlocked: string;
+
+  // Title Screen
+  titleScreenPlay: string;
+  titleScreenDaily: string;
+  titleScreenTagline: string;
+  selectDifficulty: string;
+  titleScreenSkip: string;
 }
 
 export const translations: Record<Language, Translations> = {
@@ -127,8 +148,11 @@ export const translations: Record<Language, Translations> = {
     dailyChallenge: 'Daily Challenge',
     statistics: 'Statistics & Streaks',
     settings: 'Settings & Difficulty',
-    mute: 'Mute Sound',
-    unmute: 'Unmute Sound',
+    mute: 'Mute Sound FX',
+    unmute: 'Unmute Sound FX',
+    musicMute: 'Mute Music',
+    musicUnmute: 'Play Music',
+    musicVolume: 'Music Volume:',
 
     cardsRemaining: 'Cards Left',
     completedSuitsTitle: 'Completed Suits',
@@ -185,6 +209,17 @@ export const translations: Record<Language, Translations> = {
     loadButton: 'Load',
     done: 'Done',
 
+    // Deck Selection
+    deckThemeLabel: 'Card Deck & Theme:',
+    selectDeck: 'Select Deck',
+    deckClassic: 'Royal Classic',
+    deckClassicDesc: 'Luxurious playing cards with gold foil borders & emerald table.',
+    deckCelestial: 'Celestial Neon',
+    deckCelestialDesc: 'Cyberpunk neon art cards with constellation lines & cosmic void table.',
+    deckUpcoming: 'Secret Masterpiece',
+    deckUpcomingDesc: 'Brand new custom deck in development. Coming soon!',
+    comingSoon: 'COMING SOON',
+
     twistsModalTitle: 'Twists & Roguelike Relics',
     twistsModalDesc: 'Equip passive relics or activate consumable powers to alter classic rules and discover new playstyles.',
     passiveRelicsHeader: 'Passive Relics (Equip any combination)',
@@ -230,6 +265,12 @@ export const translations: Record<Language, Translations> = {
 
     noStrategicMoves: 'No strategic moves found on tableau. Deal new cards from the stock pile!',
     gameBlocked: 'No more moves available! Game is blocked.',
+
+    titleScreenPlay: 'PLAY GAME',
+    titleScreenDaily: 'DAILY CHALLENGE',
+    titleScreenTagline: 'The Royal Solitaire Experience • Progressive Twists',
+    selectDifficulty: 'Select Difficulty:',
+    titleScreenSkip: 'Quick Start',
   },
 
   he: {
@@ -248,8 +289,11 @@ export const translations: Record<Language, Translations> = {
     dailyChallenge: 'אתגר יומי',
     statistics: 'סטטיסטיקה והישגים',
     settings: 'הגדרות ורמת קושי',
-    mute: 'השתק צליל',
-    unmute: 'הפעל צליל',
+    mute: 'השתק אפקטים',
+    unmute: 'הפעל אפקטים',
+    musicMute: 'השתק מוזיקה',
+    musicUnmute: 'הפעל מוזיקה',
+    musicVolume: 'עוצמת מוזיקה:',
 
     cardsRemaining: 'קלפים שנותרו',
     completedSuitsTitle: 'סדרות שהושלמו',
@@ -306,6 +350,17 @@ export const translations: Record<Language, Translations> = {
     loadButton: 'טען',
     done: 'אישור',
 
+    // Deck Selection
+    deckThemeLabel: 'עיצוב קלפים ושולחן:',
+    selectDeck: 'בחר חפיסה',
+    deckClassic: 'קלאסי מלכותי',
+    deckClassicDesc: 'קלפים אלגנטיים עם מסגרת מוזהבת ולבד ירוק עשיר.',
+    deckCelestial: 'נאון קוסמי',
+    deckCelestialDesc: 'קלפי אמנות נאון קיברנטיים, זוהר ציאן ומגנטה ושולחן חלל עמוק.',
+    deckUpcoming: 'חפיסת מופת חדשה',
+    deckUpcomingDesc: 'חפיסה חדשה בעיצוב מקורי שנמצאת כעת בפיתוח. בקרוב!',
+    comingSoon: 'בקרוב',
+
     twistsModalTitle: 'טוויסטים וחפצי קסם',
     twistsModalDesc: 'הצטייד בחפצים פסיביים או הפעל לחשים מתכלים כדי לשנות את החוקים הקלאסיים ולגלות סגנונות משחק חדשים.',
     passiveRelicsHeader: 'חפצים פסיביים (ניתן לשלב בחופשיות)',
@@ -351,5 +406,11 @@ export const translations: Record<Language, Translations> = {
 
     noStrategicMoves: 'לא נמצאו מהלכים אסטרטגיים על הלוח. חלק קלפים חדשים מהקופה!',
     gameBlocked: 'אין עוד מהלכים אפשריים! המשחק נחסם.',
+
+    titleScreenPlay: 'התחל משחק',
+    titleScreenDaily: 'אתגר יומי',
+    titleScreenTagline: 'חוויית הסוליטר המלכותית • טוויסטים פרוגרסיביים',
+    selectDifficulty: 'בחר רמת קושי:',
+    titleScreenSkip: 'כניסה מהירה',
   },
 };

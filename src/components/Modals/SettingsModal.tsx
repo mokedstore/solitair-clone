@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Settings, X, Volume2, VolumeX, Sparkles, Dices, Globe } from 'lucide-react';
+import { Settings, X, Volume2, VolumeX, Sparkles, Dices, Globe, Music, Palette, Check } from 'lucide-react';
 import { GameSettings, SuitMode } from '../../engine/types';
 import { Translations } from '../../i18n/translations';
+import { AVAILABLE_DECKS } from '../../engine/decks';
 
 interface SettingsModalProps {
   isOpen: boolean;
@@ -59,6 +60,86 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
               >
                 {t.langHe}
               </button>
+            </div>
+          </div>
+
+          <hr style={{ border: 'none', borderTop: '1px solid rgba(255,255,255,0.08)' }} />
+
+          {/* Deck & Visual Theme Selection */}
+          <div style={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
+            <label style={{ fontSize: '0.84rem', color: '#d4af37', fontWeight: 600, display: 'flex', alignItems: 'center', gap: '6px' }}>
+              <Palette size={16} />
+              <span>{t.deckThemeLabel}</span>
+            </label>
+
+            <div className="deck-grid-selector">
+              {AVAILABLE_DECKS.map((deck) => {
+                const isSelected = (settings.deckTheme || 'classic') === deck.id;
+                const isHe = settings.language === 'he';
+                const deckName = isHe ? deck.nameHe : deck.name;
+                const deckDesc = isHe ? deck.descriptionHe : deck.description;
+                const deckBadge = isHe ? deck.badgeHe : deck.badge;
+
+                return (
+                  <div
+                    key={deck.id}
+                    className={`deck-card-option ${isSelected ? 'selected' : ''} ${!deck.isAvailable ? 'disabled' : ''}`}
+                    onClick={() => {
+                      if (deck.isAvailable) {
+                        onUpdateSettings({ deckTheme: deck.id });
+                      }
+                    }}
+                  >
+                    <div className="deck-preview-thumb">
+                      {deck.isCustomSvg && deck.getCardUrl ? (
+                        <img
+                          src={deck.getCardUrl('spades', 1)}
+                          alt={deckName}
+                          className="deck-thumb-img"
+                        />
+                      ) : deck.id === 'classic' ? (
+                        <div className="deck-thumb-classic">
+                          <span style={{ fontSize: '11px', fontWeight: 800, color: '#1a1a1a' }}>A</span>
+                          <span style={{ fontSize: '18px', color: '#1a1a1a' }}>♠</span>
+                        </div>
+                      ) : (
+                        <div className="deck-thumb-upcoming">
+                          <span style={{ fontSize: '18px' }}>🎨</span>
+                          <span style={{ fontSize: '8px', fontWeight: 700, letterSpacing: '0.5px' }}>SOON</span>
+                        </div>
+                      )}
+                    </div>
+
+                    <div className="deck-info">
+                      <div className="deck-title-row">
+                        <span className="deck-name">{deckName}</span>
+                        {deckBadge && (
+                          <span
+                            className={`deck-badge ${
+                              deck.id === 'celestial'
+                                ? 'badge-cyan'
+                                : deck.id === 'royal_heritage'
+                                ? 'badge-heritage'
+                                : deck.id === 'classic'
+                                ? 'badge-gold'
+                                : 'badge-muted'
+                            }`}
+                          >
+                            {deckBadge}
+                          </span>
+                        )}
+                      </div>
+                      <div className="deck-desc">{deckDesc}</div>
+                    </div>
+
+                    {isSelected && (
+                      <div className="deck-selected-check">
+                        <Check size={14} strokeWidth={3} />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
             </div>
           </div>
 
@@ -132,6 +213,40 @@ export const SettingsModal: React.FC<SettingsModalProps> = ({
                 />
                 <span style={{ fontSize: '0.8rem', color: '#fff', width: '36px', textAlign: 'right' }}>
                   {Math.round(settings.soundVolume * 100)}%
+                </span>
+              </div>
+            )}
+
+            {/* Background Music Controls */}
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '6px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Music size={18} color={settings.musicEnabled ? '#d4af37' : '#888'} />
+                <span style={{ fontSize: '0.92rem', fontWeight: 600, color: '#fff' }}>
+                  {settings.musicEnabled ? t.musicMute : t.musicUnmute}
+                </span>
+              </div>
+              <input
+                type="checkbox"
+                checked={settings.musicEnabled}
+                onChange={(e) => onUpdateSettings({ musicEnabled: e.target.checked })}
+                style={{ width: '18px', height: '18px', accentColor: '#d4af37', cursor: 'pointer' }}
+              />
+            </div>
+
+            {settings.musicEnabled && (
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <span style={{ fontSize: '0.75rem', color: '#9bb3a6' }}>{t.musicVolume}</span>
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={settings.musicVolume}
+                  onChange={(e) => onUpdateSettings({ musicVolume: parseFloat(e.target.value) })}
+                  style={{ flex: 1, accentColor: '#d4af37', cursor: 'pointer' }}
+                />
+                <span style={{ fontSize: '0.8rem', color: '#fff', width: '36px', textAlign: 'right' }}>
+                  {Math.round(settings.musicVolume * 100)}%
                 </span>
               </div>
             )}

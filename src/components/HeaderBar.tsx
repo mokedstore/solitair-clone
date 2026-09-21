@@ -11,6 +11,7 @@ import {
   VolumeX,
   Sparkles,
   Languages as LangIcon,
+  Music,
 } from 'lucide-react';
 import { SuitMode, Language } from '../engine/types';
 import { Translations } from '../i18n/translations';
@@ -23,6 +24,7 @@ interface HeaderBarProps {
   canUndo: boolean;
   canRedo: boolean;
   isMuted: boolean;
+  isMusicMuted: boolean;
   twistsEnabled: boolean;
   currentLanguage: Language;
   t: Translations;
@@ -31,11 +33,13 @@ interface HeaderBarProps {
   onHint: () => void;
   onNewGame: () => void;
   onToggleMute: () => void;
+  onToggleMusic: () => void;
   onToggleLanguage: () => void;
   onOpenDaily: () => void;
   onOpenStats: () => void;
   onOpenSettings: () => void;
   onToggleTwists: () => void;
+  onOpenTitleScreen: () => void;
 }
 
 export const HeaderBar: React.FC<HeaderBarProps> = ({
@@ -46,6 +50,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   canUndo,
   canRedo,
   isMuted,
+  isMusicMuted,
   twistsEnabled,
   currentLanguage,
   t,
@@ -54,11 +59,13 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   onHint,
   onNewGame,
   onToggleMute,
+  onToggleMusic,
   onToggleLanguage,
   onOpenDaily,
   onOpenStats,
   onOpenSettings,
   onToggleTwists,
+  onOpenTitleScreen,
 }) => {
   const formatTime = (totalSeconds: number) => {
     const mins = Math.floor(totalSeconds / 60);
@@ -77,7 +84,12 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   return (
     <header className="top-header">
       {/* Brand & Mode */}
-      <div className="brand-section">
+      <div
+        className="brand-section"
+        onClick={onOpenTitleScreen}
+        title="Title Screen / מסך כניסה"
+        style={{ cursor: 'pointer' }}
+      >
         <h1 className="brand-title">{t.appTitle}</h1>
         <span className="badge-mode">{getSuitLabel(suitMode)}</span>
       </div>
@@ -179,6 +191,14 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
           title={isMuted ? t.unmute : t.mute}
         >
           {isMuted ? <VolumeX size={16} /> : <Volume2 size={16} />}
+        </button>
+
+        <button
+          className={`btn-action ${!isMusicMuted ? 'btn-gold' : ''}`}
+          onClick={onToggleMusic}
+          title={isMusicMuted ? t.musicUnmute : t.musicMute}
+        >
+          <Music size={16} />
         </button>
 
         <button

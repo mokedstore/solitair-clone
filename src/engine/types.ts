@@ -41,8 +41,11 @@ export interface GameSettings {
   relaxedDealing: boolean; // Allow dealing onto empty columns
   soundEnabled: boolean;
   soundVolume: number;
+  musicEnabled: boolean;
+  musicVolume: number;
   autoMoveOnComplete: boolean;
   twistsEnabled: boolean;
+  deckTheme: string;
 }
 
 export interface GameStats {
