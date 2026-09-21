@@ -19,6 +19,7 @@ import { findBestHint } from './engine/hints';
 import { TwistEngine } from './engine/twistEngine';
 import { sound } from './audio/soundManager';
 import { translations } from './i18n/translations';
+import { usePresence } from './engine/presence';
 
 import { HeaderBar } from './components/HeaderBar';
 import { StockAndFoundations } from './components/StockAndFoundations';
@@ -72,6 +73,9 @@ export const App: React.FC = () => {
 
   // Current dictionary
   const t = translations[settings.language] || translations.en;
+
+  // Real-time Presence
+  const onlineCount = usePresence();
 
   // Game Board State
   const [currentSeed, setCurrentSeed] = useState<string>(() => {
@@ -628,6 +632,7 @@ export const App: React.FC = () => {
         isMusicMuted={!settings.musicEnabled}
         twistsEnabled={settings.twistsEnabled}
         currentLanguage={settings.language}
+        onlineCount={onlineCount}
         t={t}
         onUndo={handleUndo}
         onRedo={handleRedo}
@@ -787,6 +792,7 @@ export const App: React.FC = () => {
           soundEnabled={settings.soundEnabled}
           musicEnabled={settings.musicEnabled}
           deckTheme={settings.deckTheme || 'classic'}
+          onlineCount={onlineCount}
           t={t}
           onStartGame={(mode) => {
             if (mode !== settings.suitMode) {

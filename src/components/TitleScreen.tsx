@@ -11,6 +11,7 @@ interface TitleScreenProps {
   soundEnabled: boolean;
   musicEnabled: boolean;
   deckTheme: string;
+  onlineCount: number;
   t: Translations;
   onStartGame: (mode: SuitMode) => void;
   onOpenDaily: () => void;
@@ -26,6 +27,7 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
   soundEnabled,
   musicEnabled,
   deckTheme,
+  onlineCount,
   t,
   onStartGame,
   onOpenDaily,
@@ -88,6 +90,11 @@ export const TitleScreen: React.FC<TitleScreenProps> = ({
           <Sparkles size={16} color="#f3e5ab" />
           <span>ROYAL EDITION</span>
           <Sparkles size={16} color="#f3e5ab" />
+        </div>
+
+        <div className="online-presence-badge title-presence" title={t.activePlayersTooltip}>
+          <span className="online-beacon-dot" />
+          <span>{t.playersOnline(onlineCount)}</span>
         </div>
 
         <h1 className="title-main-heading">

@@ -27,6 +27,7 @@ interface HeaderBarProps {
   isMusicMuted: boolean;
   twistsEnabled: boolean;
   currentLanguage: Language;
+  onlineCount: number;
   t: Translations;
   onUndo: () => void;
   onRedo: () => void;
@@ -53,6 +54,7 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
   isMusicMuted,
   twistsEnabled,
   currentLanguage,
+  onlineCount,
   t,
   onUndo,
   onRedo,
@@ -92,6 +94,10 @@ export const HeaderBar: React.FC<HeaderBarProps> = ({
       >
         <h1 className="brand-title">{t.appTitle}</h1>
         <span className="badge-mode">{getSuitLabel(suitMode)}</span>
+        <div className="online-presence-badge header-presence" title={t.activePlayersTooltip}>
+          <span className="online-beacon-dot" />
+          <span>{t.playersOnlineShort(onlineCount)}</span>
+        </div>
       </div>
 
       {/* Game Live Stats */}

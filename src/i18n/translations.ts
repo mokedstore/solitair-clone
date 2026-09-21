@@ -94,6 +94,11 @@ export interface Translations {
   deckUpcomingDesc: string;
   comingSoon: string;
 
+  // Live Presence
+  playersOnline: (count: number) => string;
+  playersOnlineShort: (count: number) => string;
+  activePlayersTooltip: string;
+
   // Twists Modal
   twistsModalTitle: string;
   twistsModalDesc: string;
@@ -219,6 +224,11 @@ export const translations: Record<Language, Translations> = {
     deckUpcoming: 'Secret Masterpiece',
     deckUpcomingDesc: 'Brand new custom deck in development. Coming soon!',
     comingSoon: 'COMING SOON',
+
+    // Live Presence
+    playersOnline: (count) => `${count} Players Online Now`,
+    playersOnlineShort: (count) => `${count} online`,
+    activePlayersTooltip: 'Live active Solitaire players right now',
 
     twistsModalTitle: 'Twists & Roguelike Relics',
     twistsModalDesc: 'Equip passive relics or activate consumable powers to alter classic rules and discover new playstyles.',
@@ -360,6 +370,11 @@ export const translations: Record<Language, Translations> = {
     deckUpcoming: 'חפיסת מופת חדשה',
     deckUpcomingDesc: 'חפיסה חדשה בעיצוב מקורי שנמצאת כעת בפיתוח. בקרוב!',
     comingSoon: 'בקרוב',
+
+    // Live Presence
+    playersOnline: (count) => `${count} שחקנים מחוברים כעת`,
+    playersOnlineShort: (count) => `${count} מחוברים`,
+    activePlayersTooltip: 'שחקנים פעילים במשחק ברגע זה',
 
     twistsModalTitle: 'טוויסטים וחפצי קסם',
     twistsModalDesc: 'הצטייד בחפצים פסיביים או הפעל לחשים מתכלים כדי לשנות את החוקים הקלאסיים ולגלות סגנונות משחק חדשים.',
