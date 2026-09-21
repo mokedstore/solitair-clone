@@ -2,84 +2,66 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Spider Solitaire Prime • TikTok Promo Video</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Spider Solitaire Prime • Promo Video</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Outfit:wght@600;700;800;900&display=swap" rel="stylesheet">
   <style>
     * {
       box-sizing: border-box;
       margin: 0;
       padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
     }
 
-    body {
+    html, body {
+      width: 100%;
+      height: 100%;
+      overflow: hidden;
       background: #000;
-      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-family: 'Outfit', sans-serif;
+    }
+
+    /* 9:16 Video Viewport (Edge-to-Edge Clean Video Only) */
+    .video-container {
+      position: relative;
+      width: 100vw;
+      height: 100vh;
+      max-width: 480px;
+      max-height: 854px;
+      aspect-ratio: 9 / 16;
+      background: radial-gradient(circle at 50% 30%, #0d2218 0%, #06110c 60%, #020504 100%);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      min-height: 100vh;
-      overflow-x: hidden;
     }
 
-    /* Top Controls Bar */
-    .controls-bar {
-      width: 100%;
-      max-width: 420px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 12px 16px;
-      background: #111;
-      border-radius: 12px 12px 0 0;
-      border-bottom: 1px solid #222;
+    @media (max-width: 480px) {
+      .video-container {
+        max-width: 100vw;
+        max-height: 100vh;
+        border-radius: 0;
+      }
     }
 
-    .btn-record {
-      background: #fe2c55;
-      color: #fff;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 20px;
-      font-weight: 700;
-      font-size: 0.85rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      transition: transform 0.15s ease;
-    }
-
-    .btn-record:hover {
-      transform: scale(1.04);
-    }
-
-    /* 9:16 TikTok Container */
-    .tiktok-stage {
-      position: relative;
-      width: 100%;
-      max-width: 420px;
-      height: 746px; /* 9:16 Aspect Ratio */
-      background: radial-gradient(circle at 50% 30%, #0d1e16 0%, #050b08 70%, #000 100%);
-      overflow: hidden;
-      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(254, 44, 85, 0.3);
-      border-radius: 0 0 16px 16px;
-    }
-
-    /* Background Ambient Nebula */
+    /* Cosmic Particle & Nebula Background */
     .bg-nebula {
       position: absolute;
-      width: 150%;
-      height: 150%;
-      top: -25%;
-      left: -25%;
-      background: radial-gradient(circle at 50% 50%, rgba(66, 232, 255, 0.15), rgba(255, 79, 200, 0.12), transparent 70%);
-      animation: rotateNebula 20s infinite linear;
+      width: 160%;
+      height: 160%;
+      top: -30%;
+      left: -30%;
+      background: radial-gradient(circle at 50% 50%, rgba(66, 232, 255, 0.22), rgba(255, 79, 200, 0.16), transparent 65%);
+      animation: rotateNebula 18s infinite linear;
       pointer-events: none;
+      z-index: 1;
     }
 
     @keyframes rotateNebula {
@@ -87,69 +69,30 @@
       100% { transform: rotate(360deg); }
     }
 
-    /* TikTok UI Overlay Simulation */
-    .tiktok-ui-right {
+    /* Subtle Floating Particles */
+    .sparks-layer {
       position: absolute;
-      right: 12px;
-      bottom: 100px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 16px;
-      z-index: 50;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 2;
+      background-image: 
+        radial-gradient(2px 2px at 20px 30px, #42e8ff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 70px 140px, #ff4fc8, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 150px 80px, #ffd700, rgba(0,0,0,0)),
+        radial-gradient(2.5px 2.5px at 280px 220px, #42e8ff, rgba(0,0,0,0)),
+        radial-gradient(2px 2px at 320px 450px, #ffffff, rgba(0,0,0,0));
+      background-size: 350px 350px;
+      animation: floatSparks 12s infinite linear;
+      opacity: 0.6;
     }
 
-    .ui-action-btn {
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      font-size: 0.72rem;
-      font-weight: 700;
-      color: #fff;
+    @keyframes floatSparks {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-350px); }
     }
 
-    .ui-action-icon {
-      width: 42px;
-      height: 42px;
-      border-radius: 50%;
-      background: rgba(0, 0, 0, 0.5);
-      backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.2rem;
-      border: 1px solid rgba(255, 255, 255, 0.15);
-    }
-
-    .tiktok-ui-bottom {
-      position: absolute;
-      left: 16px;
-      bottom: 24px;
-      right: 70px;
-      z-index: 50;
-    }
-
-    .tiktok-handle {
-      font-weight: 800;
-      font-size: 0.95rem;
-      margin-bottom: 6px;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    }
-
-    .tiktok-desc {
-      font-size: 0.8rem;
-      color: #e0e0e0;
-      line-height: 1.3;
-      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
-    }
-
-    .tiktok-tag {
-      color: #42e8ff;
-      font-weight: 700;
-    }
-
-    /* Scene Container */
+    /* Scene Transitions */
     .scene {
       position: absolute;
       width: 100%;
@@ -160,200 +103,222 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      padding: 24px;
+      padding: 30px 24px;
       opacity: 0;
+      transform: scale(0.96);
       pointer-events: none;
-      transition: opacity 0.5s ease;
+      transition: opacity 0.45s cubic-bezier(0.2, 0, 0, 1), transform 0.45s cubic-bezier(0.2, 0, 0, 1);
+      z-index: 5;
     }
 
     .scene.active {
       opacity: 1;
+      transform: scale(1);
       pointer-events: auto;
     }
 
-    /* Big Viral Text Hook */
+    /* Typography & Viral Headlines */
     .hook-badge {
       display: inline-block;
-      padding: 6px 14px;
+      padding: 7px 16px;
       background: #fe2c55;
       color: #fff;
       font-family: 'Montserrat', sans-serif;
       font-weight: 900;
-      font-size: 0.82rem;
-      border-radius: 6px;
-      letter-spacing: 1px;
+      font-size: 0.85rem;
+      border-radius: 8px;
+      letter-spacing: 1.2px;
       text-transform: uppercase;
-      margin-bottom: 12px;
-      box-shadow: 0 4px 12px rgba(254, 44, 85, 0.5);
-      animation: popBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      margin-bottom: 14px;
+      box-shadow: 0 4px 16px rgba(254, 44, 85, 0.6);
+      animation: popBadge 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .hook-title {
       font-family: 'Montserrat', sans-serif;
-      font-size: 2.1rem;
+      font-size: 2.25rem;
       font-weight: 900;
       text-align: center;
-      line-height: 1.1;
+      line-height: 1.08;
       text-transform: uppercase;
       color: #ffffff;
-      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 8px 20px rgba(0,0,0,0.8);
-      margin-bottom: 24px;
+      text-shadow: 
+        -2px -2px 0 #000, 2px -2px 0 #000, 
+        -2px 2px 0 #000, 2px 2px 0 #000, 
+        0 10px 25px rgba(0, 0, 0, 0.9);
+      margin-bottom: 22px;
     }
 
     .highlight-yellow {
-      color: #ffee55;
+      color: #ffeb3b;
+      text-shadow: 0 0 20px rgba(255, 235, 59, 0.7);
     }
 
     .highlight-cyan {
       color: #42e8ff;
-      text-shadow: 0 0 15px rgba(66, 232, 255, 0.8);
+      text-shadow: 0 0 20px rgba(66, 232, 255, 0.85);
     }
 
-    /* Card Showcase Animation */
+    .highlight-magenta {
+      color: #ff4fc8;
+      text-shadow: 0 0 20px rgba(255, 79, 200, 0.85);
+    }
+
+    /* 3D Animated Showcase Cards */
     .cards-row {
       position: relative;
-      width: 280px;
+      width: 300px;
       height: 380px;
-      margin: 10px 0;
-      perspective: 1000px;
+      margin: 12px 0;
+      perspective: 1200px;
     }
 
     .promo-card {
       position: absolute;
-      width: 190px;
-      height: 266px;
+      width: 200px;
+      height: 280px;
       border-radius: 12px;
-      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.8);
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.85);
       transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     }
 
     .card-left {
       left: 10px;
       top: 50px;
-      transform: rotate(-12deg) scale(0.95);
+      transform: rotate(-14deg) scale(0.92);
       z-index: 10;
+      animation: floatLeft 3s infinite alternate ease-in-out;
     }
 
     .card-center {
-      left: 45px;
-      top: 20px;
-      transform: rotate(0deg) scale(1.05);
+      left: 50px;
+      top: 15px;
+      transform: rotate(0deg) scale(1.08);
       z-index: 20;
-      filter: drop-shadow(0 0 20px rgba(66, 232, 255, 0.5));
+      filter: drop-shadow(0 0 24px rgba(66, 232, 255, 0.65));
+      animation: floatCenter 2.5s infinite alternate ease-in-out;
     }
 
     .card-right {
-      left: 80px;
+      left: 90px;
       top: 50px;
-      transform: rotate(12deg) scale(0.95);
+      transform: rotate(14deg) scale(0.92);
       z-index: 10;
+      animation: floatRight 3s infinite alternate ease-in-out;
     }
 
-    /* Progress bar */
-    .story-progress-bar {
-      position: absolute;
-      top: 8px;
-      left: 10px;
-      right: 10px;
+    @keyframes floatCenter {
+      0% { transform: translateY(0) scale(1.08); }
+      100% { transform: translateY(-8px) scale(1.1); }
+    }
+
+    @keyframes floatLeft {
+      0% { transform: rotate(-14deg) translateY(0) scale(0.92); }
+      100% { transform: rotate(-12deg) translateY(-6px) scale(0.94); }
+    }
+
+    @keyframes floatRight {
+      0% { transform: rotate(14deg) translateY(0) scale(0.92); }
+      100% { transform: rotate(12deg) translateY(-6px) scale(0.94); }
+    }
+
+    /* Dual Deck Comparison Scene */
+    .deck-compare-container {
       display: flex;
-      gap: 4px;
-      z-index: 60;
+      gap: 16px;
+      margin: 16px 0;
+      justify-content: center;
+      align-items: center;
     }
 
-    .progress-segment {
-      flex: 1;
-      height: 3px;
-      background: rgba(255, 255, 255, 0.3);
-      border-radius: 2px;
-      overflow: hidden;
+    .deck-box {
+      text-align: center;
+      transition: transform 0.3s ease;
     }
 
-    .progress-fill {
-      width: 0%;
-      height: 100%;
-      background: #ffffff;
-      transition: width 0.1s linear;
+    .deck-box img {
+      width: 140px;
+      height: 196px;
+      border-radius: 10px;
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.8);
+      transition: transform 0.3s ease;
     }
 
-    .cta-pill {
-      background: linear-gradient(135deg, #42e8ff, #ff4fc8);
-      color: #050714;
+    .deck-box.heritage img {
+      border: 2px solid rgba(212, 175, 55, 0.6);
+      filter: drop-shadow(0 0 12px rgba(212, 175, 55, 0.4));
+    }
+
+    .deck-box.celestial img {
+      border: 2px solid rgba(66, 232, 255, 0.8);
+      filter: drop-shadow(0 0 18px rgba(66, 232, 255, 0.7));
+    }
+
+    .deck-box-label {
+      font-size: 0.84rem;
+      font-weight: 800;
+      margin-top: 8px;
+      letter-spacing: 0.5px;
+    }
+
+    /* Big Glowing CTA Button */
+    .cta-button {
+      display: inline-block;
+      background: linear-gradient(135deg, #42e8ff 0%, #ff4fc8 100%);
+      color: #030612;
+      font-family: 'Montserrat', sans-serif;
       font-weight: 900;
-      font-size: 1.15rem;
-      padding: 14px 28px;
-      border-radius: 30px;
+      font-size: 1.25rem;
+      padding: 16px 36px;
+      border-radius: 40px;
       text-transform: uppercase;
-      box-shadow: 0 0 25px rgba(66, 232, 255, 0.7);
-      margin-top: 20px;
-      animation: pulseBtn 1.5s infinite alternate ease-in-out;
+      box-shadow: 0 0 35px rgba(66, 232, 255, 0.8), 0 10px 30px rgba(0, 0, 0, 0.7);
+      margin-top: 24px;
+      animation: pulseCta 1.4s infinite alternate ease-in-out;
+      border: 2px solid #ffffff;
     }
 
-    @keyframes pulseBtn {
-      0% { transform: scale(0.97); }
-      100% { transform: scale(1.04); }
+    @keyframes pulseCta {
+      0% { transform: scale(0.97); box-shadow: 0 0 20px rgba(66, 232, 255, 0.6); }
+      100% { transform: scale(1.05); box-shadow: 0 0 45px rgba(255, 79, 200, 0.9); }
     }
 
-    @keyframes popBounce {
-      0% { transform: scale(0.5); opacity: 0; }
-      70% { transform: scale(1.1); }
+    @keyframes popBadge {
+      0% { transform: scale(0.4); opacity: 0; }
+      70% { transform: scale(1.15); }
       100% { transform: scale(1); opacity: 1; }
+    }
+
+    /* Sound Hint Overlay */
+    .sound-hint {
+      position: absolute;
+      top: 20px;
+      background: rgba(0, 0, 0, 0.65);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-size: 0.78rem;
+      color: #fff;
+      font-weight: 600;
+      z-index: 100;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
     }
   </style>
 </head>
 <body>
 
-  <!-- Controls -->
-  <div class="controls-bar">
-    <div style="font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
-      <span>📱 9:16 TikTok Video Player</span>
-    </div>
-    <button class="btn-record" id="playToggleBtn">
-      ▶ Play Sequence
-    </button>
-  </div>
-
-  <!-- Stage -->
-  <div class="tiktok-stage" id="stage">
+  <!-- Clean 9:16 Video Container (ZERO fake TikTok icons or handles) -->
+  <div class="video-container" id="videoStage">
     <div class="bg-nebula"></div>
+    <div class="sparks-layer"></div>
 
-    <!-- Instagram/TikTok Progress Bar -->
-    <div class="story-progress-bar">
-      <div class="progress-segment"><div class="progress-fill" id="seg1"></div></div>
-      <div class="progress-segment"><div class="progress-fill" id="seg2"></div></div>
-      <div class="progress-segment"><div class="progress-fill" id="seg3"></div></div>
-      <div class="progress-segment"><div class="progress-fill" id="seg4"></div></div>
+    <div class="sound-hint" id="soundHint">
+      🔊 Tap anywhere for sound
     </div>
 
-    <!-- TikTok Right Action Column -->
-    <div class="tiktok-ui-right">
-      <div class="ui-action-btn">
-        <div class="ui-action-icon" style="border: 2px solid #fe2c55;">🃏</div>
-        <span>Profile</span>
-      </div>
-      <div class="ui-action-btn">
-        <div class="ui-action-icon">❤️</div>
-        <span>24.8K</span>
-      </div>
-      <div class="ui-action-btn">
-        <div class="ui-action-icon">💬</div>
-        <span>342</span>
-      </div>
-      <div class="ui-action-btn">
-        <div class="ui-action-icon">🔁</div>
-        <span>Share</span>
-      </div>
-    </div>
-
-    <!-- TikTok Bottom Details -->
-    <div class="tiktok-ui-bottom">
-      <div class="tiktok-handle">@SpiderSolitairePrime 👑</div>
-      <div class="tiktok-desc">
-        Never play boring Solitaire again 🔥 Play free with custom Cyberpunk & Royal decks!
-        <span class="tiktok-tag">#solitaire #mobilegame #cyberpunk #fyp</span>
-      </div>
-    </div>
-
-    <!-- SCENE 1: The Hook (0 - 4s) -->
+    <!-- SCENE 1: The Hook (0.0s - 4.0s) -->
     <div class="scene active" id="scene1">
       <div class="hook-badge">WAIT... LOOK AT THIS 😱</div>
       <h1 class="hook-title">
@@ -366,52 +331,58 @@
         <img src="/decks/celestial/fronts/ace_of_spades_front.svg" class="promo-card card-center" alt="Ace">
         <img src="/decks/royal_heritage/fronts/queen_of_hearts_front.svg" class="promo-card card-right" alt="Queen">
       </div>
-      <div style="color: #9bb3a6; font-size: 0.9rem; font-weight: 700; text-align: center;">
-        ♠️ Next-Gen Spider Solitaire Has Arrived
+      <div style="color: #9bb3a6; font-size: 1rem; font-weight: 700; text-align: center; margin-top: 8px;">
+        ♠️ Next-Gen Spider Solitaire Is Live
       </div>
     </div>
 
-    <!-- SCENE 2: The Decks Comparison (4 - 8s) -->
+    <!-- SCENE 2: The Decks Comparison (4.0s - 8.0s) -->
     <div class="scene" id="scene2">
-      <div class="hook-badge" style="background: #42e8ff; color: #040814;">CUSTOM DESIGNER DECKS</div>
+      <div class="hook-badge" style="background: #42e8ff; color: #050b18;">CUSTOM DESIGNER DECKS</div>
       <h1 class="hook-title">
         WHICH DECK<br>
-        ARE YOU <span class="highlight-cyan">PICKING?</span>
+        ARE YOU <span class="highlight-cyan">CHOOSING?</span>
       </h1>
-      <div style="display: flex; gap: 14px; margin: 10px 0;">
-        <div style="text-align: center;">
-          <img src="/decks/royal_heritage/fronts/king_of_spades_front.svg" style="width: 130px; height: 182px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.8);" alt="Heritage">
-          <div style="font-size: 0.8rem; font-weight: 800; color: #f3e5ab; margin-top: 6px;">👑 ROYAL HERITAGE</div>
+      <div class="deck-compare-container">
+        <div class="deck-box heritage">
+          <img src="/decks/royal_heritage/fronts/king_of_spades_front.svg" alt="Royal Heritage">
+          <div class="deck-box-label" style="color: #f3e5ab;">👑 ROYAL HERITAGE</div>
         </div>
-        <div style="text-align: center;">
-          <img src="/decks/celestial/fronts/ace_of_spades_front.svg" style="width: 130px; height: 182px; border-radius: 8px; box-shadow: 0 0 20px rgba(66, 232, 255, 0.6);" alt="Celestial">
-          <div style="font-size: 0.8rem; font-weight: 800; color: #42e8ff; margin-top: 6px;">⚡ CELESTIAL NEON</div>
+        <div class="deck-box celestial">
+          <img src="/decks/celestial/fronts/ace_of_spades_front.svg" alt="Celestial Neon">
+          <div class="deck-box-label" style="color: #42e8ff;">⚡ CELESTIAL NEON</div>
         </div>
       </div>
-      <div style="font-size: 0.9rem; color: #fff; font-weight: 700; margin-top: 10px;">
-        100% Vector SVG • Glowing Art
+      <div style="font-size: 1rem; color: #ffffff; font-weight: 800; text-align: center; margin-top: 14px;">
+        100% Vector SVG • Cyberpunk Neon vs Royal Gold
       </div>
     </div>
 
-    <!-- SCENE 3: Chill Beats & Twists (8 - 12s) -->
+    <!-- SCENE 3: Chill Beats & Twists (8.0s - 12.0s) -->
     <div class="scene" id="scene3">
-      <div class="hook-badge" style="background: #9c27b0;">RELAXING VIBES</div>
+      <div class="hook-badge" style="background: #ab47bc;">RELAXING VIBES</div>
       <h1 class="hook-title">
-        PROCEDURAL<br>
-        <span class="highlight-yellow">LO-FI MUSIC</span> &<br>
-        MAGIC TWISTS
+        CHILL <span class="highlight-yellow">LO-FI BEATS</span><br>
+        & ROGUELIKE<br>
+        <span class="highlight-magenta">MAGIC TWISTS</span>
       </h1>
-      <div style="text-align: center; margin: 15px 0;">
-        <div style="font-size: 3.5rem; margin-bottom: 8px;">🎵 🔮 🕸️</div>
-        <div style="font-size: 1.05rem; font-weight: 700; color: #f3e5ab;">Equip Roguelike Relics</div>
-        <div style="font-size: 0.85rem; color: #8da496; margin-top: 4px;">Balatro style twists on classic Spider Solitaire</div>
+      <div style="text-align: center; margin: 20px 0;">
+        <div style="font-size: 4rem; margin-bottom: 10px; filter: drop-shadow(0 0 20px rgba(255, 79, 200, 0.6));">
+          🎵 🔮 🕸️
+        </div>
+        <div style="font-size: 1.15rem; font-weight: 800; color: #f3e5ab;">
+          Balatro Style Relics & Spells
+        </div>
+        <div style="font-size: 0.9rem; color: #9bb3a6; margin-top: 6px;">
+          Procedural Ambient Jazz Soundtrack
+        </div>
       </div>
-      <div style="background: rgba(0,0,0,0.6); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.2);">
-        🟢 Real-Time Online Presence Active
+      <div style="background: rgba(0, 0, 0, 0.7); padding: 10px 22px; border-radius: 30px; font-size: 0.92rem; font-weight: 700; border: 1.5px solid rgba(46, 204, 113, 0.5); color: #a3f2bd;">
+        🟢 100% Live In-Game Player Presence
       </div>
     </div>
 
-    <!-- SCENE 4: CTA (12 - 16s) -->
+    <!-- SCENE 4: Direct Call to Action (12.0s - 16.0s) -->
     <div class="scene" id="scene4">
       <div class="hook-badge">PLAY IN 1 CLICK</div>
       <h1 class="hook-title">
@@ -419,14 +390,14 @@
         <span class="highlight-cyan">ZERO ADS</span><br>
         FREE FOREVER
       </h1>
-      <div style="font-size: 1.25rem; font-weight: 900; color: #ffee55; text-align: center; margin: 10px 0;">
+      <div style="font-family: 'Montserrat', sans-serif; font-size: 1.6rem; font-weight: 900; color: #ffeb3b; text-align: center; margin: 12px 0; text-shadow: 0 0 20px rgba(255, 235, 59, 0.8);">
         solitair.vercel.app
       </div>
-      <div class="cta-pill">
+      <div class="cta-button">
         PLAY IN BROWSER NOW 🚀
       </div>
-      <div style="font-size: 0.8rem; color: #8da496; margin-top: 15px; text-align: center;">
-        Works seamlessly on iPhone, Android, Tablet & PC
+      <div style="font-size: 0.9rem; color: #a0b3a8; font-weight: 600; margin-top: 24px; text-align: center;">
+        iPhone • Android • Tablet • PC
       </div>
     </div>
 
@@ -439,41 +410,14 @@
       document.getElementById('scene3'),
       document.getElementById('scene4')
     ];
-    const segs = [
-      document.getElementById('seg1'),
-      document.getElementById('seg2'),
-      document.getElementById('seg3'),
-      document.getElementById('seg4')
-    ];
-    const playBtn = document.getElementById('playToggleBtn');
+    const soundHint = document.getElementById('soundHint');
 
     let currentScene = 0;
-    let isPlaying = false;
-    let timer = null;
-    let progressTimer = null;
-    const SCENE_DURATION = 3800; // ms
+    const SCENE_DURATION = 3800; // ms per scene (15.2s total loop)
 
     function showScene(index) {
       scenes.forEach((s, i) => s.classList.toggle('active', i === index));
       currentScene = index;
-
-      // Update segment progress
-      segs.forEach((seg, i) => {
-        if (i < index) seg.style.width = '100%';
-        else if (i === index) seg.style.width = '0%';
-        else seg.style.width = '0%';
-      });
-
-      let elapsed = 0;
-      clearInterval(progressTimer);
-      progressTimer = setInterval(() => {
-        elapsed += 50;
-        const pct = Math.min(100, (elapsed / SCENE_DURATION) * 100);
-        segs[index].style.width = pct + '%';
-        if (elapsed >= SCENE_DURATION) {
-          clearInterval(progressTimer);
-        }
-      }, 50);
     }
 
     function nextScene() {
@@ -481,29 +425,47 @@
       showScene(next);
     }
 
-    function startSequence() {
-      isPlaying = true;
-      playBtn.textContent = '⏸ Pause';
-      showScene(0);
-      timer = setInterval(nextScene, SCENE_DURATION);
+    // Auto-loop seamlessly
+    setInterval(nextScene, SCENE_DURATION);
+
+    // Audio synthesizer for chill ambient beats on tap
+    let audioCtx = null;
+    function playAmbientChime() {
+      try {
+        if (!audioCtx) {
+          audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+        }
+        if (audioCtx.state === 'suspended') {
+          audioCtx.resume();
+        }
+        const osc = audioCtx.createOscillator();
+        const gain = audioCtx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(440, audioCtx.currentTime);
+        osc.frequency.exponentialRampToValueAtTime(880, audioCtx.currentTime + 0.3);
+        gain.gain.setValueAtTime(0.15, audioCtx.currentTime);
+        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.8);
+        osc.connect(gain);
+        gain.connect(audioCtx.destination);
+        osc.start();
+        osc.stop(audioCtx.currentTime + 0.8);
+      } catch (e) {}
     }
 
-    function stopSequence() {
-      isPlaying = false;
-      playBtn.textContent = '▶ Play Sequence';
-      clearInterval(timer);
-      clearInterval(progressTimer);
-    }
+    document.body.addEventListener('click', () => {
+      playAmbientChime();
+      if (soundHint) {
+        soundHint.style.opacity = '0';
+        setTimeout(() => soundHint.remove(), 500);
+      }
+    }, { once: true });
 
-    playBtn.addEventListener('click', () => {
-      if (isPlaying) stopSequence();
-      else startSequence();
-    });
-
-    // Auto-start sequence
-    window.addEventListener('DOMContentLoaded', () => {
-      startSequence();
-    });
+    // Hide sound hint after 3 seconds automatically
+    setTimeout(() => {
+      if (soundHint) {
+        soundHint.style.opacity = '0';
+      }
+    }, 3200);
   </script>
 </body>
 </html>
