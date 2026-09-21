@@ -57,6 +57,13 @@ export interface Translations {
   tab1Suit: string;
   tab2Suits: string;
   tab4Suits: string;
+  tabOrigins: string;
+  detectedLocation: string;
+  recentVisitors: string;
+  noVisitorsYet: string;
+  sourceLabel: string;
+  deviceLabel: string;
+  clearLog: string;
   played: string;
   won: string;
   winRate: string;
@@ -189,6 +196,13 @@ export const translations: Record<Language, Translations> = {
     tab1Suit: '1 Suit',
     tab2Suits: '2 Suits',
     tab4Suits: '4 Suits',
+    tabOrigins: '🌍 Origins',
+    detectedLocation: 'Detected Location',
+    recentVisitors: 'Recent Visitor Sessions',
+    noVisitorsYet: 'No visits recorded yet.',
+    sourceLabel: 'Traffic Source',
+    deviceLabel: 'Device',
+    clearLog: 'Clear Log',
     played: 'Played',
     won: 'Won',
     winRate: 'Win Rate',
@@ -335,6 +349,13 @@ export const translations: Record<Language, Translations> = {
     tab1Suit: 'סדרה 1',
     tab2Suits: '2 סדרות',
     tab4Suits: '4 סדרות',
+    tabOrigins: '🌍 מיקומים',
+    detectedLocation: 'מיקום זוהה',
+    recentVisitors: 'יומן כניסות שחקנים אחרונות',
+    noVisitorsYet: 'עדיין אין כניסות מתועדות.',
+    sourceLabel: 'מקור הגעה',
+    deviceLabel: 'סוג מכשיר',
+    clearLog: 'נקה יומן',
     played: 'משחקים',
     won: 'נצחונות',
     winRate: 'אחוז נצחונות',

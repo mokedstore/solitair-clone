@@ -1,70 +1,90 @@
 import { useState, useEffect } from 'react';
 
 /**
- * Real-time presence engine for Spider Solitaire Prime.
- * - Simulates a realistic active player pool based on time-of-day diurnal curve.
- * - Uses BroadcastChannel to coordinate active tabs on the local device.
- * - Introduces gentle real-time fluctuations (players joining & leaving).
- * - Extensible for remote WebSocket presence (Pusher, Firebase, or Supabase).
+ * 100% Real In-Game Presence Engine (Strictly Accurate):
+ * - Starts at 1 (the active player's own session).
+ * - Tracks other local/shared tabs via BroadcastChannel.
+ * - Increments when new tabs join, decrements when tabs close.
+ * - Ready for remote WebSocket connection when Firebase or Pusher is hooked up.
  */
 
-const PRESENCE_CHANNEL_NAME = 'ssp_presence_channel';
+const PRESENCE_CHANNEL_NAME = 'ssp_real_presence_channel';
 
-function calculateBasePresence(): number {
-  const now = new Date();
-  const hour = now.getHours();
-  // Diurnal curve: peak evening hours (18:00 - 23:00), lower at late night (03:00 - 06:00)
-  const baseCurve: Record<number, number> = {
-    0: 24, 1: 19, 2: 15, 3: 12, 4: 11, 5: 14,
-    6: 18, 7: 23, 8: 29, 9: 34, 10: 38, 11: 42,
-    12: 45, 13: 43, 14: 41, 15: 44, 16: 48, 17: 53,
-    18: 58, 19: 64, 20: 67, 21: 62, 22: 51, 23: 36,
-  };
-
-  const base = baseCurve[hour] || 32;
-  // Seed slight variation based on day of month
-  const dayOffset = (now.getDate() % 5) * 2;
-  return base + dayOffset;
-}
-
-export function usePresence(): number {
-  const [onlineCount, setOnlineCount] = useState<number>(() => {
-    return calculateBasePresence();
-  });
+export function usePresence(isPlaying: boolean = false): number {
+  const [onlineCount, setOnlineCount] = useState<number>(1);
 
   useEffect(() => {
-    // 1. BroadcastChannel to track local active tabs
+    // Unique ID for this specific tab session
+    const tabId = `tab_${Date.now()}_${Math.random().toString(36).substring(2, 6)}`;
+    const activeTabs = new Set<string>([tabId]);
+
     let channel: BroadcastChannel | null = null;
+
     try {
       if (typeof BroadcastChannel !== 'undefined') {
         channel = new BroadcastChannel(PRESENCE_CHANNEL_NAME);
-        channel.postMessage({ type: 'PING' });
+
+        channel.onmessage = (event) => {
+          const { type, senderId } = event.data || {};
+
+          if (type === 'HEARTBEAT' && senderId) {
+            activeTabs.add(senderId);
+            setOnlineCount(Math.max(1, activeTabs.size));
+          } else if (type === 'DISCONNECT' && senderId) {
+            activeTabs.delete(senderId);
+            setOnlineCount(Math.max(1, activeTabs.size));
+          } else if (type === 'WHO_IS_HERE') {
+            // Respond to new arrival with our presence
+            channel?.postMessage({
+              type: 'HEARTBEAT',
+              senderId: tabId,
+              senderPlaying: isPlaying,
+            });
+          }
+        };
+
+        // Announce our arrival
+        channel.postMessage({
+          type: 'WHO_IS_HERE',
+          senderId: tabId,
+          senderPlaying: isPlaying,
+        });
+
+        // Periodic heartbeat
+        const heartbeatInterval = setInterval(() => {
+          channel?.postMessage({
+            type: 'HEARTBEAT',
+            senderId: tabId,
+            senderPlaying: isPlaying,
+          });
+        }, 8000);
+
+        // Cleanup on tab close / unmount
+        const handleUnload = () => {
+          channel?.postMessage({
+            type: 'DISCONNECT',
+            senderId: tabId,
+          });
+        };
+
+        window.addEventListener('beforeunload', handleUnload);
+
+        return () => {
+          clearInterval(heartbeatInterval);
+          window.removeEventListener('beforeunload', handleUnload);
+          channel?.postMessage({
+            type: 'DISCONNECT',
+            senderId: tabId,
+          });
+          channel?.close();
+        };
       }
     } catch {
-      // BroadcastChannel unavailable in some older environments
+      // Fallback
     }
 
-    // 2. Real-time organic presence fluctuation
-    const interval = setInterval(() => {
-      setOnlineCount((prev) => {
-        const base = calculateBasePresence();
-        // Fluctuate gently by -2 to +2
-        const delta = Math.floor(Math.random() * 5) - 2;
-        const next = prev + delta;
-        // Keep within reasonable bounds around diurnal baseline
-        const minBound = Math.max(8, base - 8);
-        const maxBound = base + 12;
-        return Math.min(Math.max(next, minBound), maxBound);
-      });
-    }, 14000);
-
-    return () => {
-      clearInterval(interval);
-      if (channel) {
-        channel.close();
-      }
-    };
-  }, []);
+    return () => {};
+  }, [isPlaying]);
 
   return onlineCount;
 }

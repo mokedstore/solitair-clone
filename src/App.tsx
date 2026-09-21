@@ -20,6 +20,7 @@ import { TwistEngine } from './engine/twistEngine';
 import { sound } from './audio/soundManager';
 import { translations } from './i18n/translations';
 import { usePresence } from './engine/presence';
+import { fetchCurrentPlayerOrigin } from './engine/geoTracker';
 
 import { HeaderBar } from './components/HeaderBar';
 import { StockAndFoundations } from './components/StockAndFoundations';
@@ -74,8 +75,14 @@ export const App: React.FC = () => {
   // Current dictionary
   const t = translations[settings.language] || translations.en;
 
-  // Real-time Presence
-  const onlineCount = usePresence();
+  // Real-time Presence (Strictly Real Active Sessions)
+  const [showTitleScreen, setShowTitleScreen] = useState(true);
+  const onlineCount = usePresence(!showTitleScreen);
+
+  // Record visitor geographic origin on startup
+  useEffect(() => {
+    fetchCurrentPlayerOrigin().catch(() => {});
+  }, []);
 
   // Game Board State
   const [currentSeed, setCurrentSeed] = useState<string>(() => {
@@ -98,7 +105,6 @@ export const App: React.FC = () => {
   const [hintTimeout, setHintTimeout] = useState<number | null>(null);
 
   // Modals & Screens
-  const [showTitleScreen, setShowTitleScreen] = useState(true);
   const [isDailyModalOpen, setIsDailyModalOpen] = useState(false);
   const [isStatsModalOpen, setIsStatsModalOpen] = useState(false);
   const [isSettingsModalOpen, setIsSettingsModalOpen] = useState(false);
@@ -795,6 +801,7 @@ export const App: React.FC = () => {
           onlineCount={onlineCount}
           t={t}
           onStartGame={(mode) => {
+            fetchCurrentPlayerOrigin().catch(() => {});
             if (mode !== settings.suitMode) {
               setSettings(prev => ({ ...prev, suitMode: mode }));
               startNewGame(generateRandomSeed(mode), mode);
