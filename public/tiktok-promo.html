@@ -1,0 +1,509 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Spider Solitaire Prime • TikTok Promo Video</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@800;900&family=Outfit:wght@600;700;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      background: #000;
+      color: #fff;
+      font-family: 'Outfit', sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Top Controls Bar */
+    .controls-bar {
+      width: 100%;
+      max-width: 420px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 16px;
+      background: #111;
+      border-radius: 12px 12px 0 0;
+      border-bottom: 1px solid #222;
+    }
+
+    .btn-record {
+      background: #fe2c55;
+      color: #fff;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: transform 0.15s ease;
+    }
+
+    .btn-record:hover {
+      transform: scale(1.04);
+    }
+
+    /* 9:16 TikTok Container */
+    .tiktok-stage {
+      position: relative;
+      width: 100%;
+      max-width: 420px;
+      height: 746px; /* 9:16 Aspect Ratio */
+      background: radial-gradient(circle at 50% 30%, #0d1e16 0%, #050b08 70%, #000 100%);
+      overflow: hidden;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.9), 0 0 20px rgba(254, 44, 85, 0.3);
+      border-radius: 0 0 16px 16px;
+    }
+
+    /* Background Ambient Nebula */
+    .bg-nebula {
+      position: absolute;
+      width: 150%;
+      height: 150%;
+      top: -25%;
+      left: -25%;
+      background: radial-gradient(circle at 50% 50%, rgba(66, 232, 255, 0.15), rgba(255, 79, 200, 0.12), transparent 70%);
+      animation: rotateNebula 20s infinite linear;
+      pointer-events: none;
+    }
+
+    @keyframes rotateNebula {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    /* TikTok UI Overlay Simulation */
+    .tiktok-ui-right {
+      position: absolute;
+      right: 12px;
+      bottom: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 16px;
+      z-index: 50;
+    }
+
+    .ui-action-btn {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      font-size: 0.72rem;
+      font-weight: 700;
+      color: #fff;
+    }
+
+    .ui-action-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(8px);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      border: 1px solid rgba(255, 255, 255, 0.15);
+    }
+
+    .tiktok-ui-bottom {
+      position: absolute;
+      left: 16px;
+      bottom: 24px;
+      right: 70px;
+      z-index: 50;
+    }
+
+    .tiktok-handle {
+      font-weight: 800;
+      font-size: 0.95rem;
+      margin-bottom: 6px;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .tiktok-desc {
+      font-size: 0.8rem;
+      color: #e0e0e0;
+      line-height: 1.3;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+    }
+
+    .tiktok-tag {
+      color: #42e8ff;
+      font-weight: 700;
+    }
+
+    /* Scene Container */
+    .scene {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.5s ease;
+    }
+
+    .scene.active {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    /* Big Viral Text Hook */
+    .hook-badge {
+      display: inline-block;
+      padding: 6px 14px;
+      background: #fe2c55;
+      color: #fff;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 900;
+      font-size: 0.82rem;
+      border-radius: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase;
+      margin-bottom: 12px;
+      box-shadow: 0 4px 12px rgba(254, 44, 85, 0.5);
+      animation: popBounce 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .hook-title {
+      font-family: 'Montserrat', sans-serif;
+      font-size: 2.1rem;
+      font-weight: 900;
+      text-align: center;
+      line-height: 1.1;
+      text-transform: uppercase;
+      color: #ffffff;
+      text-shadow: -2px -2px 0 #000, 2px -2px 0 #000, -2px 2px 0 #000, 2px 2px 0 #000, 0 8px 20px rgba(0,0,0,0.8);
+      margin-bottom: 24px;
+    }
+
+    .highlight-yellow {
+      color: #ffee55;
+    }
+
+    .highlight-cyan {
+      color: #42e8ff;
+      text-shadow: 0 0 15px rgba(66, 232, 255, 0.8);
+    }
+
+    /* Card Showcase Animation */
+    .cards-row {
+      position: relative;
+      width: 280px;
+      height: 380px;
+      margin: 10px 0;
+      perspective: 1000px;
+    }
+
+    .promo-card {
+      position: absolute;
+      width: 190px;
+      height: 266px;
+      border-radius: 12px;
+      box-shadow: 0 16px 35px rgba(0, 0, 0, 0.8);
+      transition: all 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .card-left {
+      left: 10px;
+      top: 50px;
+      transform: rotate(-12deg) scale(0.95);
+      z-index: 10;
+    }
+
+    .card-center {
+      left: 45px;
+      top: 20px;
+      transform: rotate(0deg) scale(1.05);
+      z-index: 20;
+      filter: drop-shadow(0 0 20px rgba(66, 232, 255, 0.5));
+    }
+
+    .card-right {
+      left: 80px;
+      top: 50px;
+      transform: rotate(12deg) scale(0.95);
+      z-index: 10;
+    }
+
+    /* Progress bar */
+    .story-progress-bar {
+      position: absolute;
+      top: 8px;
+      left: 10px;
+      right: 10px;
+      display: flex;
+      gap: 4px;
+      z-index: 60;
+    }
+
+    .progress-segment {
+      flex: 1;
+      height: 3px;
+      background: rgba(255, 255, 255, 0.3);
+      border-radius: 2px;
+      overflow: hidden;
+    }
+
+    .progress-fill {
+      width: 0%;
+      height: 100%;
+      background: #ffffff;
+      transition: width 0.1s linear;
+    }
+
+    .cta-pill {
+      background: linear-gradient(135deg, #42e8ff, #ff4fc8);
+      color: #050714;
+      font-weight: 900;
+      font-size: 1.15rem;
+      padding: 14px 28px;
+      border-radius: 30px;
+      text-transform: uppercase;
+      box-shadow: 0 0 25px rgba(66, 232, 255, 0.7);
+      margin-top: 20px;
+      animation: pulseBtn 1.5s infinite alternate ease-in-out;
+    }
+
+    @keyframes pulseBtn {
+      0% { transform: scale(0.97); }
+      100% { transform: scale(1.04); }
+    }
+
+    @keyframes popBounce {
+      0% { transform: scale(0.5); opacity: 0; }
+      70% { transform: scale(1.1); }
+      100% { transform: scale(1); opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Controls -->
+  <div class="controls-bar">
+    <div style="font-weight: 800; font-size: 0.9rem; display: flex; align-items: center; gap: 6px;">
+      <span>📱 9:16 TikTok Video Player</span>
+    </div>
+    <button class="btn-record" id="playToggleBtn">
+      ▶ Play Sequence
+    </button>
+  </div>
+
+  <!-- Stage -->
+  <div class="tiktok-stage" id="stage">
+    <div class="bg-nebula"></div>
+
+    <!-- Instagram/TikTok Progress Bar -->
+    <div class="story-progress-bar">
+      <div class="progress-segment"><div class="progress-fill" id="seg1"></div></div>
+      <div class="progress-segment"><div class="progress-fill" id="seg2"></div></div>
+      <div class="progress-segment"><div class="progress-fill" id="seg3"></div></div>
+      <div class="progress-segment"><div class="progress-fill" id="seg4"></div></div>
+    </div>
+
+    <!-- TikTok Right Action Column -->
+    <div class="tiktok-ui-right">
+      <div class="ui-action-btn">
+        <div class="ui-action-icon" style="border: 2px solid #fe2c55;">🃏</div>
+        <span>Profile</span>
+      </div>
+      <div class="ui-action-btn">
+        <div class="ui-action-icon">❤️</div>
+        <span>24.8K</span>
+      </div>
+      <div class="ui-action-btn">
+        <div class="ui-action-icon">💬</div>
+        <span>342</span>
+      </div>
+      <div class="ui-action-btn">
+        <div class="ui-action-icon">🔁</div>
+        <span>Share</span>
+      </div>
+    </div>
+
+    <!-- TikTok Bottom Details -->
+    <div class="tiktok-ui-bottom">
+      <div class="tiktok-handle">@SpiderSolitairePrime 👑</div>
+      <div class="tiktok-desc">
+        Never play boring Solitaire again 🔥 Play free with custom Cyberpunk & Royal decks!
+        <span class="tiktok-tag">#solitaire #mobilegame #cyberpunk #fyp</span>
+      </div>
+    </div>
+
+    <!-- SCENE 1: The Hook (0 - 4s) -->
+    <div class="scene active" id="scene1">
+      <div class="hook-badge">WAIT... LOOK AT THIS 😱</div>
+      <h1 class="hook-title">
+        STILL PLAYING<br>
+        <span class="highlight-yellow">BORING SOLITAIRE</span><br>
+        FROM 1995?
+      </h1>
+      <div class="cards-row">
+        <img src="/decks/royal_heritage/fronts/king_of_spades_front.svg" class="promo-card card-left" alt="King">
+        <img src="/decks/celestial/fronts/ace_of_spades_front.svg" class="promo-card card-center" alt="Ace">
+        <img src="/decks/royal_heritage/fronts/queen_of_hearts_front.svg" class="promo-card card-right" alt="Queen">
+      </div>
+      <div style="color: #9bb3a6; font-size: 0.9rem; font-weight: 700; text-align: center;">
+        ♠️ Next-Gen Spider Solitaire Has Arrived
+      </div>
+    </div>
+
+    <!-- SCENE 2: The Decks Comparison (4 - 8s) -->
+    <div class="scene" id="scene2">
+      <div class="hook-badge" style="background: #42e8ff; color: #040814;">CUSTOM DESIGNER DECKS</div>
+      <h1 class="hook-title">
+        WHICH DECK<br>
+        ARE YOU <span class="highlight-cyan">PICKING?</span>
+      </h1>
+      <div style="display: flex; gap: 14px; margin: 10px 0;">
+        <div style="text-align: center;">
+          <img src="/decks/royal_heritage/fronts/king_of_spades_front.svg" style="width: 130px; height: 182px; border-radius: 8px; box-shadow: 0 8px 20px rgba(0,0,0,0.8);" alt="Heritage">
+          <div style="font-size: 0.8rem; font-weight: 800; color: #f3e5ab; margin-top: 6px;">👑 ROYAL HERITAGE</div>
+        </div>
+        <div style="text-align: center;">
+          <img src="/decks/celestial/fronts/ace_of_spades_front.svg" style="width: 130px; height: 182px; border-radius: 8px; box-shadow: 0 0 20px rgba(66, 232, 255, 0.6);" alt="Celestial">
+          <div style="font-size: 0.8rem; font-weight: 800; color: #42e8ff; margin-top: 6px;">⚡ CELESTIAL NEON</div>
+        </div>
+      </div>
+      <div style="font-size: 0.9rem; color: #fff; font-weight: 700; margin-top: 10px;">
+        100% Vector SVG • Glowing Art
+      </div>
+    </div>
+
+    <!-- SCENE 3: Chill Beats & Twists (8 - 12s) -->
+    <div class="scene" id="scene3">
+      <div class="hook-badge" style="background: #9c27b0;">RELAXING VIBES</div>
+      <h1 class="hook-title">
+        PROCEDURAL<br>
+        <span class="highlight-yellow">LO-FI MUSIC</span> &<br>
+        MAGIC TWISTS
+      </h1>
+      <div style="text-align: center; margin: 15px 0;">
+        <div style="font-size: 3.5rem; margin-bottom: 8px;">🎵 🔮 🕸️</div>
+        <div style="font-size: 1.05rem; font-weight: 700; color: #f3e5ab;">Equip Roguelike Relics</div>
+        <div style="font-size: 0.85rem; color: #8da496; margin-top: 4px;">Balatro style twists on classic Spider Solitaire</div>
+      </div>
+      <div style="background: rgba(0,0,0,0.6); padding: 8px 16px; border-radius: 20px; font-size: 0.85rem; border: 1px solid rgba(255,255,255,0.2);">
+        🟢 Real-Time Online Presence Active
+      </div>
+    </div>
+
+    <!-- SCENE 4: CTA (12 - 16s) -->
+    <div class="scene" id="scene4">
+      <div class="hook-badge">PLAY IN 1 CLICK</div>
+      <h1 class="hook-title">
+        ZERO DOWNLOADS<br>
+        <span class="highlight-cyan">ZERO ADS</span><br>
+        FREE FOREVER
+      </h1>
+      <div style="font-size: 1.25rem; font-weight: 900; color: #ffee55; text-align: center; margin: 10px 0;">
+        solitair.vercel.app
+      </div>
+      <div class="cta-pill">
+        PLAY IN BROWSER NOW 🚀
+      </div>
+      <div style="font-size: 0.8rem; color: #8da496; margin-top: 15px; text-align: center;">
+        Works seamlessly on iPhone, Android, Tablet & PC
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    const scenes = [
+      document.getElementById('scene1'),
+      document.getElementById('scene2'),
+      document.getElementById('scene3'),
+      document.getElementById('scene4')
+    ];
+    const segs = [
+      document.getElementById('seg1'),
+      document.getElementById('seg2'),
+      document.getElementById('seg3'),
+      document.getElementById('seg4')
+    ];
+    const playBtn = document.getElementById('playToggleBtn');
+
+    let currentScene = 0;
+    let isPlaying = false;
+    let timer = null;
+    let progressTimer = null;
+    const SCENE_DURATION = 3800; // ms
+
+    function showScene(index) {
+      scenes.forEach((s, i) => s.classList.toggle('active', i === index));
+      currentScene = index;
+
+      // Update segment progress
+      segs.forEach((seg, i) => {
+        if (i < index) seg.style.width = '100%';
+        else if (i === index) seg.style.width = '0%';
+        else seg.style.width = '0%';
+      });
+
+      let elapsed = 0;
+      clearInterval(progressTimer);
+      progressTimer = setInterval(() => {
+        elapsed += 50;
+        const pct = Math.min(100, (elapsed / SCENE_DURATION) * 100);
+        segs[index].style.width = pct + '%';
+        if (elapsed >= SCENE_DURATION) {
+          clearInterval(progressTimer);
+        }
+      }, 50);
+    }
+
+    function nextScene() {
+      const next = (currentScene + 1) % scenes.length;
+      showScene(next);
+    }
+
+    function startSequence() {
+      isPlaying = true;
+      playBtn.textContent = '⏸ Pause';
+      showScene(0);
+      timer = setInterval(nextScene, SCENE_DURATION);
+    }
+
+    function stopSequence() {
+      isPlaying = false;
+      playBtn.textContent = '▶ Play Sequence';
+      clearInterval(timer);
+      clearInterval(progressTimer);
+    }
+
+    playBtn.addEventListener('click', () => {
+      if (isPlaying) stopSequence();
+      else startSequence();
+    });
+
+    // Auto-start sequence
+    window.addEventListener('DOMContentLoaded', () => {
+      startSequence();
+    });
+  </script>
+</body>
+</html>
