@@ -288,23 +288,6 @@
       70% { transform: scale(1.15); }
       100% { transform: scale(1); opacity: 1; }
     }
-
-    /* Sound Hint Overlay */
-    .sound-hint {
-      position: absolute;
-      top: 20px;
-      background: rgba(0, 0, 0, 0.65);
-      border: 1px solid rgba(255, 255, 255, 0.2);
-      backdrop-filter: blur(8px);
-      padding: 6px 14px;
-      border-radius: 20px;
-      font-size: 0.78rem;
-      color: #fff;
-      font-weight: 600;
-      z-index: 100;
-      pointer-events: none;
-      transition: opacity 0.5s ease;
-    }
   </style>
 </head>
 <body>
@@ -313,10 +296,6 @@
   <div class="video-container" id="videoStage">
     <div class="bg-nebula"></div>
     <div class="sparks-layer"></div>
-
-    <div class="sound-hint" id="soundHint">
-      🔊 Tap anywhere for sound
-    </div>
 
     <!-- SCENE 1: The Hook (0.0s - 4.0s) -->
     <div class="scene active" id="scene1">
@@ -410,7 +389,6 @@
       document.getElementById('scene3'),
       document.getElementById('scene4')
     ];
-    const soundHint = document.getElementById('soundHint');
 
     let currentScene = 0;
     const SCENE_DURATION = 3800; // ms per scene (15.2s total loop)
@@ -454,18 +432,7 @@
 
     document.body.addEventListener('click', () => {
       playAmbientChime();
-      if (soundHint) {
-        soundHint.style.opacity = '0';
-        setTimeout(() => soundHint.remove(), 500);
-      }
-    }, { once: true });
-
-    // Hide sound hint after 3 seconds automatically
-    setTimeout(() => {
-      if (soundHint) {
-        soundHint.style.opacity = '0';
-      }
-    }, 3200);
+    });
   </script>
 </body>
 </html>
